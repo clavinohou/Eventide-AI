@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import FaqPageClient from './FaqPageClient';
 
 export const metadata: Metadata = {
   title: 'FAQ - CAL-MGR | Common Questions',
@@ -54,38 +55,43 @@ export default function FAQPage() {
   ];
 
   return (
-    <main className="py-20 bg-white">
-      <div className="container-max">
-        <div className="text-center mb-16">
-          <h1 className="text-display-lg text-neutral-900 mb-4">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-            Everything you need to know about CAL-MGR
-          </p>
-        </div>
+    <>
+      <main className="py-20 bg-white">
+        <div className="container-max">
+          <div className="text-center mb-16">
+            <h1 className="text-display-lg text-neutral-900 mb-4">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+              Everything you need to know about CAL-MGR
+            </p>
+          </div>
 
-        <div className="max-w-3xl mx-auto space-y-6">
-          {faqs.map((faq, idx) => (
-            <div key={idx} className="p-6 bg-neutral-50 rounded-xl border border-neutral-200">
-              <h3 className="text-heading-sm text-neutral-900 mb-2">{faq.question}</h3>
-              <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
-            </div>
-          ))}
-        </div>
+          <div className="max-w-3xl mx-auto space-y-6">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="p-6 bg-neutral-50 rounded-xl border border-neutral-200">
+                <h3 className="text-heading-sm text-neutral-900 mb-2">{faq.question}</h3>
+                <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
 
-        <div className="text-center mt-16">
-          <p className="text-neutral-600 mb-6">
-            Still have questions? We&apos;re here to help.
-          </p>
-          <a 
-            href="mailto:support@cal-mgr.com" 
-            className="btn btn-primary"
-          >
-            Contact Support
-          </a>
+          <div className="text-center mt-16">
+            <p className="text-neutral-600 mb-6">
+              Still have questions? We&apos;re here to help.
+            </p>
+            <a 
+              href="mailto:support@cal-mgr.com" 
+              className="btn btn-primary"
+            >
+              Contact Support
+            </a>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+
+      {/* CTA Section */}
+      <FaqPageClient />
+    </>
   );
 }

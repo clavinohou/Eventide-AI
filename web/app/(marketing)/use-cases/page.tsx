@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import UseCasesPageClient from './UseCasesPageClient';
 
 export const metadata: Metadata = {
   title: 'Use Cases - CAL-MGR | Real-World Applications',
@@ -78,66 +79,54 @@ export default function UseCasesPage() {
   ];
 
   return (
-    <main className="py-20 bg-neutral-50">
-      <div className="container-max">
-        <div className="text-center mb-16">
-          <h1 className="text-display-lg text-neutral-900 mb-4">
-            CAL-MGR in Action
-          </h1>
-          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-            Discover how people from all walks of life use CAL-MGR to save time and reduce stress
-          </p>
-        </div>
+    <>
+      <main className="py-20 bg-neutral-50">
+        <div className="container-max">
+          <div className="text-center mb-16">
+            <h1 className="text-display-lg text-neutral-900 mb-4">
+              CAL-MGR in Action
+            </h1>
+            <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+              Discover how people from all walks of life use CAL-MGR to save time and reduce stress
+            </p>
+          </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          {useCases.map((useCase, idx) => (
-            <div key={idx} className="bg-white rounded-2xl border border-neutral-200 p-8 hover:shadow-lg transition-shadow">
-              <div className="flex items-start gap-4 mb-6">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${useCase.accent} flex items-center justify-center flex-shrink-0`}>
-                  {useCase.icon}
+          <div className="grid lg:grid-cols-2 gap-8 mb-16">
+            {useCases.map((useCase, idx) => (
+              <div key={idx} className="bg-white rounded-2xl border border-neutral-200 p-8 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${useCase.accent} flex items-center justify-center flex-shrink-0`}>
+                    {useCase.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-neutral-900 mb-2">
+                      {useCase.title}
+                    </h3>
+                    <p className="text-neutral-600">
+                      {useCase.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-neutral-900 mb-2">
-                    {useCase.title}
-                  </h3>
-                  <p className="text-neutral-600">
-                    {useCase.description}
-                  </p>
-                </div>
+                
+                <ul className="space-y-3">
+                  {useCase.scenarios.map((scenario, scenarioIdx) => (
+                    <li key={scenarioIdx} className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="text-neutral-600">{scenario}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              
-              <ul className="space-y-3">
-                {useCase.scenarios.map((scenario, scenarioIdx) => (
-                  <li key={scenarioIdx} className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-neutral-600">{scenario}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="bg-gradient-to-br from-primary-500 to-secondary-600 rounded-2xl p-8 text-white text-center">
-          <h2 className="text-2xl font-bold mb-4">
-            Ready to Simplify Your Schedule?
-          </h2>
-          <p className="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
-            Join thousands of users who have transformed their calendar management with CAL-MGR
-          </p>
-          <a 
-            href="/"
-            className="inline-flex btn bg-white text-primary-600 hover:bg-neutral-50 px-8 py-3 font-semibold"
-          >
-            Get Started Free
-            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
         </div>
-      </div>
-    </main>
+      </main>
+
+      {/* CTA Section */}
+      <UseCasesPageClient />
+    </>
   );
 }

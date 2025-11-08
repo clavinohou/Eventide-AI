@@ -1,7 +1,11 @@
+'use client';
+
 import Link from 'next/link';
+import { useCtaClick } from '@/lib/CtaContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const handleCtaClick = useCtaClick();
 
   return (
     <footer className="border-t border-neutral-300 bg-white/95 backdrop-blur-sm py-12">
@@ -25,23 +29,23 @@ export default function Footer() {
             <h4 className="font-semibold text-neutral-900 mb-4">Product</h4>
             <ul className="space-y-2 text-sm text-neutral-700">
               <li>
-                <Link href="#features" className="hover:text-primary-600 transition-colors">
+                <Link href="/features" className="hover:text-primary-600 transition-colors">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="#how-it-works" className="hover:text-primary-600 transition-colors">
+                <Link href="/how-it-works" className="hover:text-primary-600 transition-colors">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link href="#faq" className="hover:text-primary-600 transition-colors">
+                <Link href="/faq" className="hover:text-primary-600 transition-colors">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-primary-600 transition-colors">
-                  Pricing
+                <Link href="/use-cases" className="hover:text-primary-600 transition-colors">
+                  Use Cases
                 </Link>
               </li>
             </ul>
@@ -95,6 +99,24 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4 border border-primary-200">
+          <div>
+            <p className="font-semibold text-neutral-900 mb-1">
+              Ready to get started?
+            </p>
+            <p className="text-sm text-neutral-600">
+              Join our beta today and transform your calendar management
+            </p>
+          </div>
+          <button
+            onClick={handleCtaClick}
+            className="btn btn-primary flex-shrink-0"
+          >
+            Join Beta
+          </button>
         </div>
 
         {/* Bottom Bar */}

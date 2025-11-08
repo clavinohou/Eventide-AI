@@ -1,29 +1,23 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import MarketingLayout from '@/components/MarketingLayout';
 import Hero from '@/components/Hero';
 import Section from '@/components/Section';
 import Problem from '@/components/Problem';
 import Solution from '@/components/Solution';
-import SignupModal from '@/components/SignupModal';
+import { useCtaClick } from '@/lib/CtaContext';
 
 export default function Home() {
-  const [signupModalOpen, setSignupModalOpen] = useState(false);
-
-  const handleSignupClick = () => {
-    setSignupModalOpen(true);
-  };
+  const handleCtaClick = useCtaClick();
 
   const handleDemoClick = () => {
     console.log('Demo video would play here');
   };
 
   return (
-    <MarketingLayout onCtaClick={handleSignupClick}>
+    <>
       {/* Hero Section */}
-      <Hero onSignupClick={handleSignupClick} onDemoClick={handleDemoClick} />
+      <Hero onSignupClick={handleCtaClick} onDemoClick={handleDemoClick} />
 
       {/* Problem Section */}
       <Section id="problem" background="white">
@@ -112,7 +106,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={handleSignupClick}
+              onClick={handleCtaClick}
               className="btn btn-primary px-8 py-4 text-lg shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transition-all"
             >
               Join Beta Waitlist
@@ -133,9 +127,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Signup Modal */}
-      <SignupModal isOpen={signupModalOpen} onClose={() => setSignupModalOpen(false)} />
-    </MarketingLayout>
+    </>
   );
 }

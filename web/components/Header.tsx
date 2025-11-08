@@ -34,23 +34,14 @@ export default function Header({ onCtaClick }: HeaderProps) {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { href: '#problem', label: 'Problem' },
-    { href: '#solution', label: 'Solution' },
-    { href: '#features', label: 'Features' },
-    { href: '#how-it-works', label: 'How It Works' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '/features', label: 'Features' },
+    { href: '/how-it-works', label: 'How It Works' },
+    { href: '/faq', label: 'FAQ' },
+    { href: '/use-cases', label: 'Use Cases' },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleNavClick = () => {
     setMobileMenuOpen(false);
-    
-    const element = document.querySelector(href);
-    if (element) {
-      const yOffset = -80;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
   };
 
   const handleCtaClick = () => {
@@ -82,7 +73,7 @@ export default function Header({ onCtaClick }: HeaderProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
+                onClick={handleNavClick}
                 className="text-neutral-600 hover:text-primary-600 font-medium transition-colors relative group"
               >
                 {link.label}
@@ -155,7 +146,7 @@ export default function Header({ onCtaClick }: HeaderProps) {
                   >
                     <Link
                       href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
+                      onClick={handleNavClick}
                       className="block py-2 text-neutral-600 hover:text-primary-600 font-medium text-lg"
                     >
                       {link.label}

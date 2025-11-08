@@ -227,7 +227,7 @@ interface FeaturesProps {
 }
 
 export default function Features({ className = '' }: FeaturesProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion() ?? false;
 
   const containerVariants = {
     hidden: { opacity: 0 },

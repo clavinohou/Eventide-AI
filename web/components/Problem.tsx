@@ -89,7 +89,7 @@ export default function Problem({ className = '' }: ProblemProps) {
         </motion.h2>
         <motion.p
           variants={itemVariants}
-          className="text-xl text-neutral-600 leading-relaxed max-w-3xl mx-auto"
+          className="text-xl text-neutral-700 leading-relaxed max-w-3xl mx-auto"
         >
           Tired of manually typing event details? Frustrated with copy-pasting from flyers, emails, and websites? 
           Missing important events because calendar entry feels like a chore?
@@ -108,7 +108,7 @@ export default function Problem({ className = '' }: ProblemProps) {
           <motion.div
             key={idx}
             variants={itemVariants}
-            className="group relative p-6 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-lg transition-all duration-300"
+            className="group relative p-6 rounded-2xl bg-white/90 backdrop-blur-sm border border-neutral-300 hover:border-neutral-400 hover:shadow-xl transition-all duration-300"
           >
             {/* Gradient Border Effect */}
             <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${problem.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
@@ -126,7 +126,7 @@ export default function Problem({ className = '' }: ProblemProps) {
               </h3>
               
               {/* Description */}
-              <p className="text-sm text-neutral-600 leading-relaxed">
+              <p className="text-sm text-neutral-700 leading-relaxed">
                 {problem.description}
               </p>
             </div>
@@ -142,11 +142,11 @@ export default function Problem({ className = '' }: ProblemProps) {
         viewport={{ once: true, amount: 0.3 }}
         className="text-center mt-16"
       >
-        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-full border border-primary-200">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-full border border-primary-300 shadow-sm backdrop-blur-sm">
           <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span className="text-sm font-medium text-primary-900">
+          <span className="text-sm font-semibold text-primary-900">
             There&apos;s a better way. Let&apos;s fix this.
           </span>
         </div>

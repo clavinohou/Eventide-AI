@@ -30,13 +30,13 @@ export default function Section({
   const getBackgroundClasses = () => {
     switch (background) {
       case 'neutral-50':
-        return 'bg-neutral-50';
+        return 'bg-white/70 backdrop-blur-sm';
       case 'primary-50':
-        return 'bg-primary-50';
+        return 'bg-white/60 backdrop-blur-sm';
       case 'gradient-primary':
-        return 'bg-gradient-to-b from-primary-50 to-white';
+        return 'bg-gradient-to-b from-white/60 to-white/80 backdrop-blur-sm';
       default:
-        return 'bg-white';
+        return 'bg-white/50';
     }
   };
 
@@ -44,13 +44,13 @@ export default function Section({
     <motion.section
       ref={ref}
       id={id}
-      className={`py-20 ${getBackgroundClasses()} ${className}`}
+      className={`py-20 relative ${getBackgroundClasses()} ${className}`}
       style={{ 
         opacity: shouldReduceMotion ? 1 : opacity,
         y: shouldReduceMotion ? 0 : y
       }}
     >
-      <div className="container-max">
+      <div className="container-max relative z-10">
         {children}
       </div>
     </motion.section>

@@ -88,8 +88,9 @@ router.post('/', async (req, res, next) => {
     };
 
     // Step 4: Check for conflicts
+    const calendarId = process.env.GOOGLE_CALENDAR_ID || 'primary';
     const conflicts = await calendarService.checkConflicts(
-      'primary',
+      calendarId,
       startTime,
       endTime || startTime
     );

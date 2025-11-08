@@ -31,7 +31,8 @@ router.post('/', async (req, res, next) => {
     const event = validated as CanonicalEvent;
 
     // Create event in calendar
-    const result = await calendarService.createEvent('primary', event);
+    const calendarId = process.env.GOOGLE_CALENDAR_ID || 'primary';
+    const result = await calendarService.createEvent(calendarId, event);
 
     res.json({
       success: true,

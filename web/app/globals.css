@@ -132,8 +132,50 @@ pre {
   }
 }
 
+@keyframes sunset {
+  0%, 100% {
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  25% {
+    background-position: 25% 50%;
+    filter: hue-rotate(5deg) brightness(1.05);
+  }
+  50% {
+    background-position: 50% 50%;
+    filter: hue-rotate(-3deg) brightness(1.02);
+  }
+  75% {
+    background-position: 75% 50%;
+    filter: hue-rotate(3deg) brightness(1.03);
+  }
+}
+
+@keyframes sunset-glow {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.5;
+  }
+  33% {
+    transform: translate(20px, -30px) scale(1.05);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate(-15px, 15px) scale(0.95);
+    opacity: 0.4;
+  }
+}
+
 .animate-blob {
   animation: blob 7s infinite;
+}
+
+.animate-sunset {
+  animation: sunset 10s ease-in-out infinite;
+}
+
+.animate-sunset-glow {
+  animation: sunset-glow 12s ease-in-out infinite;
 }
 
 .animation-delay-2000 {
@@ -150,7 +192,9 @@ pre {
     @apply !transition-none !duration-0;
   }
   
-  .animate-blob {
+  .animate-blob,
+  .animate-sunset,
+  .animate-sunset-glow {
     animation: none !important;
   }
 }

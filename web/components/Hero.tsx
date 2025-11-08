@@ -10,9 +10,9 @@ interface HeroProps {
 
 export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { y: 0 },
     visible: {
-      opacity: 1,
+      y: 0,
       transition: {
         staggerChildren: 0.15,
         delayChildren: 0.2,
@@ -21,9 +21,8 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { y: 20 },
     visible: {
-      opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
@@ -33,9 +32,8 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
   };
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { scale: 0.95 },
     visible: {
-      opacity: 1,
       scale: 1,
       transition: {
         duration: 0.8,
@@ -47,11 +45,10 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
 
   return (
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-      {/* Gradient Mesh Background - Adjusted for sky backdrop */}
+      {/* Clean Background - Removed blob animations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-primary-300/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 -right-4 w-96 h-96 bg-secondary-300/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-accent-300/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        {/* Subtle static gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-100/20 via-pink-100/20 to-purple-100/20" />
       </div>
 
       {/* Subtle Grid Pattern */}
@@ -189,8 +186,8 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
             <div className="relative">
               {/* Floating Card - Calendar Event */}
               <motion.div
-                initial={{ opacity: 0, y: 40, rotate: -3 }}
-                animate={{ opacity: 1, y: 0, rotate: -3 }}
+                initial={{ y: 40, rotate: -3 }}
+                animate={{ y: 0, rotate: -3 }}
                 transition={{ delay: 1, duration: 0.8 }}
                 className="absolute -top-6 -left-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-300 max-w-[280px]"
               >
@@ -247,8 +244,8 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
 
               {/* Floating Card - AI Processing */}
               <motion.div
-                initial={{ opacity: 0, y: 40, rotate: 3 }}
-                animate={{ opacity: 1, y: 0, rotate: 3 }}
+                initial={{ y: 40, rotate: 3 }}
+                animate={{ y: 0, rotate: 3 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
                 className="absolute -bottom-6 -right-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-300 max-w-[240px]"
               >
@@ -278,8 +275,8 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
 
       {/* Scroll Indicator */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: -10 }}
+        animate={{ y: 0 }}
         transition={{ delay: 1.5, duration: 0.6, repeat: Infinity, repeatType: 'reverse' }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
       >

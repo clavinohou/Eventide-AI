@@ -8,18 +8,24 @@ import {
   Alert,
   ActivityIndicator,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Platform,
+  StatusBar
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import * as Linking from 'expo-linking';
 import { ApiService } from '../services/api';
 import { CanonicalEvent } from '../types/event';
+import { theme } from '../theme';
 
 const apiService = new ApiService();
 
 export default function HomeScreen({ navigation }: any) {
   const [loading, setLoading] = useState(false);
   const [textInput, setTextInput] = useState('');
+  const insets = useSafeAreaInsets();
 
   const handleExtract = async (type: 'image' | 'url' | 'text', data: string) => {
     setLoading(true);
@@ -72,14 +78,18 @@ export default function HomeScreen({ navigation }: any) {
   React.useEffect(() => {
     const handleUrl = async (event: { url: string }) => {
       const { url } = event;
-      if (url && url.startsWith('http')) {
+      // Only handle HTTP/HTTPS URLs, ignore exp:// and other protocols
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
         await handleShareUrl(url);
       }
     };
 
     const subscription = Linking.addEventListener('url', handleUrl);
     Linking.getInitialURL().then((url) => {
-      if (url) handleShareUrl(url);
+      // Only handle HTTP/HTTPS URLs, ignore exp:// and other protocols
+      if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+        handleShareUrl(url);
+      }
     });
 
     return () => subscription.remove();
@@ -87,28 +97,34 @@ export default function HomeScreen({ navigation }: any) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingTop: Math.max(insets.top + theme.spacing.lg, theme.spacing['2xl'] + theme.spacing.base) }]}>
         <Text style={styles.title}>Create Event from Anything</Text>
         <Text style={styles.subtitle}>Capture a flyer, share a URL, or paste text</Text>
 
       {loading && (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          <ActivityIndicator size="large" color={theme.colors.primary} />
           <Text style={styles.loadingText}>Extracting event information...</Text>
         </View>
       )}
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={[styles.button, styles.primaryButton]}
           onPress={pickImage}
           disabled={loading}
+          activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>📷 Capture Flyer</Text>
+          <LinearGradient
+            colors={theme.colors.gradient.sunset}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>📷 Capture Flyer</Text>
+          </LinearGradient>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.button, styles.secondaryButton]}
           onPress={() => {
             Alert.prompt(
               'Enter URL',
@@ -124,8 +140,16 @@ export default function HomeScreen({ navigation }: any) {
             );
           }}
           disabled={loading}
+          activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>🔗 Share URL</Text>
+          <LinearGradient
+            colors={theme.colors.gradient.warm}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>🔗 Share URL</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
 
@@ -140,11 +164,24 @@ export default function HomeScreen({ navigation }: any) {
           editable={!loading}
         />
         <TouchableOpacity
-          style={[styles.submitButton, !textInput.trim() && styles.submitButtonDisabled]}
           onPress={handleTextSubmit}
           disabled={!textInput.trim() || loading}
+          activeOpacity={0.8}
         >
-          <Text style={styles.submitButtonText}>Extract Event</Text>
+          {!textInput.trim() ? (
+            <View style={[styles.submitButton, styles.submitButtonDisabled]}>
+              <Text style={styles.submitButtonText}>Extract Event</Text>
+            </View>
+          ) : (
+            <LinearGradient
+              colors={theme.colors.gradient.sunset}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.submitButton}
+            >
+              <Text style={styles.submitButtonText}>Extract Event</Text>
+            </LinearGradient>
+          )}
         </TouchableOpacity>
       </View>
       </View>
@@ -155,77 +192,75 @@ export default function HomeScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5'
+    padding: theme.spacing.lg,
+    backgroundColor: theme.colors.backgroundLight
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginTop: 40,
-    marginBottom: 10,
-    textAlign: 'center'
+    fontSize: theme.typography.sizes['3xl'],
+    fontWeight: theme.typography.weights.bold,
+    marginTop: 0,
+    marginBottom: theme.spacing.sm,
+    textAlign: 'center',
+    color: theme.colors.text,
+    letterSpacing: -0.5
   },
   subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 40,
+    fontSize: theme.typography.sizes.base,
+    color: theme.colors.textSecondary,
+    marginBottom: theme.spacing['3xl'],
     textAlign: 'center'
   },
   loadingContainer: {
     alignItems: 'center',
-    marginVertical: 20
+    marginVertical: theme.spacing.lg
   },
   loadingText: {
-    marginTop: 10,
-    color: '#666'
+    marginTop: theme.spacing.sm,
+    color: theme.colors.textSecondary
   },
   buttonContainer: {
-    marginBottom: 30
+    marginBottom: theme.spacing['2xl']
   },
   button: {
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 15,
-    alignItems: 'center'
-  },
-  primaryButton: {
-    backgroundColor: '#007AFF'
-  },
-  secondaryButton: {
-    backgroundColor: '#34C759'
+    padding: theme.spacing.lg,
+    borderRadius: theme.borderRadius.lg,
+    marginBottom: theme.spacing.base,
+    alignItems: 'center',
+    ...theme.shadows.md
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600'
+    color: theme.colors.textOnGradient,
+    fontSize: theme.typography.sizes.lg,
+    fontWeight: theme.typography.weights.semibold
   },
   textInputContainer: {
     flex: 1
   },
   textInput: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 15,
-    fontSize: 16,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.base,
+    fontSize: theme.typography.sizes.base,
     minHeight: 120,
     textAlignVertical: 'top',
-    marginBottom: 15,
+    marginBottom: theme.spacing.base,
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: theme.colors.border,
+    color: theme.colors.text
   },
   submitButton: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 12,
-    alignItems: 'center'
+    padding: theme.spacing.base,
+    borderRadius: theme.borderRadius.lg,
+    alignItems: 'center',
+    ...theme.shadows.sm
   },
   submitButtonDisabled: {
-    backgroundColor: '#ccc'
+    backgroundColor: theme.colors.border
   },
   submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600'
+    color: theme.colors.textOnGradient,
+    fontSize: theme.typography.sizes.base,
+    fontWeight: theme.typography.weights.semibold
   }
 });
 

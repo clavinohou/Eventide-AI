@@ -10,11 +10,13 @@ import {
   ActivityIndicator,
   Platform,
   Keyboard,
-  TouchableWithoutFeedback
+  KeyboardAvoidingView
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ApiService } from '../services/api';
 import { CanonicalEvent } from '../types/event';
+import { theme } from '../theme';
 
 const apiService = new ApiService();
 
@@ -94,13 +96,96 @@ export default function ReviewScreen({ route, navigation }: any) {
     updateField('endTime', undefined);
   };
 
+  // Calculate completion status for color coding
+  const getCompletionStatus = () => {
+    const requiredFields = [event.title, event.startTime];
+    const optionalFields = [event.description, event.location, event.endTime];
+    
+    const requiredCount = requiredFields.filter(f => f).length;
+    const optionalCount = optionalFields.filter(f => f).length;
+    
+    // Red: missing required fields
+    if (requiredCount < requiredFields.length) {
+      return { color: '#ff3b30', bgColor: 'rgba(255, 59, 48, 0.15)' };
+    }
+    // Yellow: has required but missing some optional
+    if (optionalCount < optionalFields.length) {
+      return { color: '#ffcc00', bgColor: 'rgba(255, 204, 0, 0.15)' };
+    }
+    // Green: all fields filled
+    return { color: '#34c759', bgColor: 'rgba(52, 199, 89, 0.15)' };
+  };
+
+  const completionStatus = getCompletionStatus();
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 200 : 40}
+    >
       <ScrollView 
-        style={styles.container}
+        style={styles.scrollView}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
       >
+        {/* Compact summary at top */}
+        <View style={[styles.summaryContainer, { backgroundColor: completionStatus.bgColor, borderColor: completionStatus.color }]}>
+          <View style={styles.summaryRow}>
+            {/* Title */}
+            <View style={styles.summaryItem}>
+              <View style={[styles.summaryIconContainer, { backgroundColor: event.title ? '#34c75920' : '#ff3b3020' }]}>
+                <Text style={styles.summaryIconText}>📝</Text>
+              </View>
+              <Text style={[styles.summaryLabel, !event.title && styles.summaryLabelError]} numberOfLines={1}>
+                {event.title ? 'Title' : 'Missing'}
+              </Text>
+            </View>
+
+            {/* Date/Time */}
+            <View style={styles.summaryItem}>
+              <View style={[styles.summaryIconContainer, { backgroundColor: event.startTime ? '#34c75920' : '#ff3b3020' }]}>
+                <Text style={styles.summaryIconText}>📅</Text>
+              </View>
+              <Text style={[styles.summaryLabel, !event.startTime && styles.summaryLabelError]} numberOfLines={1}>
+                {event.startTime ? 'Date' : 'Missing'}
+              </Text>
+            </View>
+
+            {/* Location */}
+            <View style={styles.summaryItem}>
+              <View style={[styles.summaryIconContainer, { backgroundColor: event.location ? '#34c75920' : '#ffcc0020' }]}>
+                <Text style={styles.summaryIconText}>📍</Text>
+              </View>
+              <Text style={[styles.summaryLabel, !event.location && styles.summaryLabelWarning]} numberOfLines={1}>
+                {event.location ? 'Location' : 'None'}
+              </Text>
+            </View>
+
+            {/* Description */}
+            <View style={styles.summaryItem}>
+              <View style={[styles.summaryIconContainer, { backgroundColor: event.description ? '#34c75920' : '#ffcc0020' }]}>
+                <Text style={styles.summaryIconText}>📄</Text>
+              </View>
+              <Text style={[styles.summaryLabel, !event.description && styles.summaryLabelWarning]} numberOfLines={1}>
+                {event.description ? 'Desc' : 'None'}
+              </Text>
+            </View>
+
+            {/* Time (Start Time) */}
+            <View style={styles.summaryItem}>
+              <View style={[styles.summaryIconContainer, { backgroundColor: (event.startTime && event.startTime.includes('T')) ? '#34c75920' : '#e0e0e020' }]}>
+                <Text style={styles.summaryIconText}>⏰</Text>
+              </View>
+              <Text style={styles.summaryLabel} numberOfLines={1}>
+                {(event.startTime && event.startTime.includes('T')) ? 'Time' : 'None'}
+              </Text>
+            </View>
+          </View>
+        </View>
+
         <Text style={styles.sectionTitle}>Event Details</Text>
 
       <View style={styles.fieldContainer}>
@@ -134,10 +219,19 @@ export default function ReviewScreen({ route, navigation }: any) {
           style={styles.datePickerButton}
           onPress={() => setShowStartPicker(true)}
         >
-          <Text style={styles.dateTimeText}>{formatDateTime(event.startTime)}</Text>
+          <Text style={styles.dateTimeText}>
+            {event.startTime.includes('T') 
+              ? formatDateTime(event.startTime) 
+              : `All-Day Event: ${new Date(event.startTime).toLocaleDateString()}`}
+          </Text>
           <Text style={styles.tapHint}>Tap to edit</Text>
         </TouchableOpacity>
-        <Text style={styles.timezoneText}>Timezone: {event.timezone}</Text>
+        {event.startTime.includes('T') && (
+          <Text style={styles.timezoneText}>Timezone: {event.timezone}</Text>
+        )}
+        {!event.startTime.includes('T') && (
+          <Text style={styles.timezoneText}>All-day event (no specific time)</Text>
+        )}
         {showStartPicker && (
           <DateTimePicker
             value={startDate}
@@ -250,6 +344,8 @@ export default function ReviewScreen({ route, navigation }: any) {
             }
           }}
           placeholder="Event location (optional)"
+          returnKeyType="done"
+          blurOnSubmit={true}
         />
         {event.location?.address && event.location.address !== event.location?.name && (
           <Text style={styles.addressText}>{event.location.address}</Text>
@@ -270,25 +366,28 @@ export default function ReviewScreen({ route, navigation }: any) {
         </View>
       )}
 
-      <View style={styles.summaryContainer}>
-        <Text style={styles.summaryTitle}>Summary</Text>
-        <Text style={styles.summaryText}>
-          {event.title ? '✅ Title' : '❌ Title'} • {' '}
-          {event.startTime ? '✅ Date/Time' : '❌ Date/Time'} • {' '}
-          {event.location ? '✅ Location' : '⚠️ No Location'} • {' '}
-          {event.description ? '✅ Description' : '⚠️ No Description'}
-        </Text>
-      </View>
-
       <TouchableOpacity
-        style={[styles.saveButton, saving && styles.saveButtonDisabled]}
         onPress={handleSave}
-        disabled={saving || !event.title}
+        disabled={saving || !event.title || !event.startTime}
+        activeOpacity={0.8}
       >
-        {saving ? (
-          <ActivityIndicator color="#fff" />
+        {saving || !event.title || !event.startTime ? (
+          <View style={[styles.saveButton, styles.saveButtonDisabled]}>
+            {saving ? (
+              <ActivityIndicator color={theme.colors.textSecondary} />
+            ) : (
+              <Text style={styles.saveButtonTextDisabled}>Save to Calendar</Text>
+            )}
+          </View>
         ) : (
-          <Text style={styles.saveButtonText}>Save to Calendar</Text>
+          <LinearGradient
+            colors={theme.colors.gradient.sunset}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.saveButton}
+          >
+            <Text style={styles.saveButtonText}>Save to Calendar</Text>
+          </LinearGradient>
         )}
       </TouchableOpacity>
 
@@ -300,37 +399,44 @@ export default function ReviewScreen({ route, navigation }: any) {
         <Text style={styles.cancelButtonText}>Cancel</Text>
       </TouchableOpacity>
       </ScrollView>
-    </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: theme.colors.backgroundLight
+  },
+  scrollView: {
+    flex: 1
+  },
+  scrollContent: {
+    padding: theme.spacing.lg
   },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
+    fontSize: theme.typography.sizes['2xl'],
+    fontWeight: theme.typography.weights.bold,
+    marginBottom: theme.spacing.lg,
+    color: theme.colors.text
   },
   fieldContainer: {
-    marginBottom: 20
+    marginBottom: theme.spacing.lg
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: '#333'
+    fontSize: theme.typography.sizes.sm,
+    fontWeight: theme.typography.weights.semibold,
+    marginBottom: theme.spacing.sm,
+    color: theme.colors.text
   },
   input: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.md,
+    padding: theme.spacing.md,
+    fontSize: theme.typography.sizes.base,
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: theme.colors.border,
+    color: theme.colors.text
   },
   textArea: {
     minHeight: 80,
@@ -371,27 +477,32 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   saveButton: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 12,
+    padding: theme.spacing.base,
+    borderRadius: theme.borderRadius.lg,
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: theme.spacing.md,
+    ...theme.shadows.md
   },
   saveButtonDisabled: {
-    backgroundColor: '#ccc'
+    backgroundColor: theme.colors.border
   },
   saveButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600'
+    color: theme.colors.textOnGradient,
+    fontSize: theme.typography.sizes.lg,
+    fontWeight: theme.typography.weights.semibold
+  },
+  saveButtonTextDisabled: {
+    color: theme.colors.textSecondary,
+    fontSize: theme.typography.sizes.lg,
+    fontWeight: theme.typography.weights.semibold
   },
   cancelButton: {
-    padding: 16,
+    padding: theme.spacing.base,
     alignItems: 'center'
   },
   cancelButtonText: {
-    color: '#007AFF',
-    fontSize: 16
+    color: theme.colors.primary,
+    fontSize: theme.typography.sizes.base
   },
   optionalLabel: {
     fontSize: 12,
@@ -406,23 +517,43 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   summaryContainer: {
-    backgroundColor: '#e8f4f8',
-    borderRadius: 8,
-    padding: 15,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#007AFF'
+    borderRadius: 6,
+    padding: 8,
+    marginBottom: 12,
+    borderWidth: 1.5
   },
-  summaryTitle: {
-    fontSize: 14,
+  summaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  summaryItem: {
+    alignItems: 'center',
+    flex: 1,
+    minWidth: 0
+  },
+  summaryIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4
+  },
+  summaryIconText: {
+    fontSize: 16
+  },
+  summaryLabel: {
+    fontSize: 10,
     fontWeight: '600',
-    marginBottom: 8,
-    color: '#007AFF'
-  },
-  summaryText: {
-    fontSize: 13,
     color: '#333',
-    lineHeight: 20
+    textAlign: 'center'
+  },
+  summaryLabelError: {
+    color: '#ff3b30'
+  },
+  summaryLabelWarning: {
+    color: '#ff9500'
   },
   datePickerButton: {
     backgroundColor: '#fff',

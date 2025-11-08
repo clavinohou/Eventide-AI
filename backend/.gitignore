@@ -5,3 +5,13 @@ dist/
 service-account-key.json
 .DS_Store
 
+# Temporary video frames and audio
+temp/
+*.mp4
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.mp3
+*.flac
+

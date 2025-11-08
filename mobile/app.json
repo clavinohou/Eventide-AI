@@ -1,23 +1,23 @@
 {
   "expo": {
-    "name": "Cal-MGR",
-    "slug": "cal-mgr",
+    "name": "Eventide AI",
+    "slug": "eventide-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "splash": {
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFF8F5"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.calmgr.app"
+      "bundleIdentifier": "com.eventideai.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FFF8F5"
       },
-      "package": "com.calmgr.app",
+      "package": "com.eventideai.app",
       "intentFilters": [
         {
           "action": "VIEW",
@@ -38,7 +38,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow Cal-MGR to access your camera to capture event flyers."
+          "cameraPermission": "Allow Eventide AI to access your camera to capture event flyers."
         }
       ]
     ]

@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { theme } from '../theme';
 
 export default function SuccessScreen({ route, navigation }: any) {
   const { eventId, htmlLink } = route.params;
@@ -22,8 +24,15 @@ export default function SuccessScreen({ route, navigation }: any) {
         Your event has been successfully added to Google Calendar.
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={openInCalendar}>
-        <Text style={styles.buttonText}>Open in Calendar</Text>
+      <TouchableOpacity onPress={openInCalendar} activeOpacity={0.8}>
+        <LinearGradient
+          colors={theme.colors.gradient.sunset}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Open in Calendar</Text>
+        </LinearGradient>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.secondaryButton} onPress={createAnother}>
@@ -36,48 +45,49 @@ export default function SuccessScreen({ route, navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
+    padding: theme.spacing.lg,
+    backgroundColor: theme.colors.backgroundLight,
     justifyContent: 'center',
     alignItems: 'center'
   },
   successIcon: {
     fontSize: 80,
-    marginBottom: 20
+    marginBottom: theme.spacing.lg
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    textAlign: 'center'
+    fontSize: theme.typography.sizes['3xl'],
+    fontWeight: theme.typography.weights.bold,
+    marginBottom: theme.spacing.base,
+    textAlign: 'center',
+    color: theme.colors.text
   },
   message: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: theme.typography.sizes.base,
+    color: theme.colors.textSecondary,
     textAlign: 'center',
-    marginBottom: 40
+    marginBottom: theme.spacing['3xl']
   },
   button: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 12,
+    padding: theme.spacing.base,
+    borderRadius: theme.borderRadius.lg,
     width: '100%',
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: theme.spacing.base,
+    ...theme.shadows.md
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '600'
+    color: theme.colors.textOnGradient,
+    fontSize: theme.typography.sizes.lg,
+    fontWeight: theme.typography.weights.semibold
   },
   secondaryButton: {
-    padding: 16,
+    padding: theme.spacing.base,
     width: '100%',
     alignItems: 'center'
   },
   secondaryButtonText: {
-    color: '#007AFF',
-    fontSize: 16
+    color: theme.colors.primary,
+    fontSize: theme.typography.sizes.base
   }
 });
 

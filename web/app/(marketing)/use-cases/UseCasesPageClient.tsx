@@ -12,7 +12,7 @@ export default function UseCasesPageClient() {
           Ready to Simplify Your Schedule?
         </h2>
         <p className="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
-          Join thousands of users who have transformed their calendar management with CAL-MGR
+          Join thousands of users who have transformed their calendar management with Eventide AI
         </p>
         <button 
           onClick={handleCtaClick}

@@ -1,6 +1,6 @@
-# CAL-MGR Landing App
+# Eventide AI Landing App
 
-A modern, responsive marketing website for CAL-MGR built with Next.js 14, TypeScript, and Tailwind CSS.
+A modern, responsive marketing website for Eventide AI built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## 🚀 Quick Start
 

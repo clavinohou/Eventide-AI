@@ -33,10 +33,10 @@ export default function Home() {
       <Section id="explore" background="neutral-50">
         <div className="text-center">
           <h2 className="text-display-md text-neutral-900 mb-4">
-            Explore CAL-MGR
+            Explore Eventide AI
           </h2>
           <p className="text-xl text-neutral-600 mb-12 max-w-3xl mx-auto">
-            Dive deeper into how CAL-MGR transforms your calendar management
+            Dive deeper into how Eventide AI transforms your calendar management
           </p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -76,7 +76,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">FAQ</h3>
-              <p className="text-neutral-600">Get answers to common questions about CAL-MGR</p>
+              <p className="text-neutral-600">Get answers to common questions about Eventide AI</p>
             </Link>
 
             <Link 
@@ -89,7 +89,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-neutral-900 mb-2">Use Cases</h3>
-              <p className="text-neutral-600">Real-world scenarios where CAL-MGR makes a difference</p>
+              <p className="text-neutral-600">Real-world scenarios where Eventide AI makes a difference</p>
             </Link>
           </div>
         </div>

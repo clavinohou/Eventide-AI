@@ -3,11 +3,11 @@ import Features from '@/components/Features';
 import FeaturesPageClient from './FeaturesPageClient';
 
 export const metadata: Metadata = {
-  title: 'Features - CAL-MGR | AI-Powered Calendar Management',
-  description: 'Discover powerful features of CAL-MGR: multimodal intake, AI extraction, conflict detection, and smart calendar integration.',
+  title: 'Features - Eventide AI | AI-Powered Calendar Management',
+  description: 'Discover powerful features of Eventide AI: multimodal intake, AI extraction, conflict detection, and smart calendar integration.',
   openGraph: {
-    title: 'Features - CAL-MGR',
-    description: 'Discover powerful features of CAL-MGR: multimodal intake, AI extraction, conflict detection, and smart calendar integration.',
+    title: 'Features - Eventide AI',
+    description: 'Discover powerful features of Eventide AI: multimodal intake, AI extraction, conflict detection, and smart calendar integration.',
   },
 };
 
@@ -22,7 +22,7 @@ export default function FeaturesPage() {
               Powerful Features for Smart Calendar Management
             </h1>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              CAL-MGR combines cutting-edge AI with intuitive design to transform how you manage events and schedules
+              Eventide AI combines cutting-edge AI with intuitive design to transform how you manage events and schedules
             </p>
           </div>
           

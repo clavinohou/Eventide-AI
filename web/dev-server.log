@@ -1,11 +1,9 @@
-npm warn Unknown env config "python". This will stop working in the next major version of npm.
 
-> cal-mgr-landing@0.1.0 dev
+> eventide-ai-landing@0.1.0 dev
 > next dev
 
   ▲ Next.js 14.2.33
-  - Local:        http://localhost:3000
+  - Local:        http://localhost:3002
 
  ✓ Starting...
- ✓ Ready in 1877ms
-[?25h
+ ✓ Ready in 1335ms

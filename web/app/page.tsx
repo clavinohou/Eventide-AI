@@ -6,6 +6,8 @@ import Hero from '@/components/Hero';
 import Section from '@/components/Section';
 import Problem from '@/components/Problem';
 import Solution from '@/components/Solution';
+import Features from '@/components/Features';
+import HowItWorks from '@/components/HowItWorks';
 import SignupModal from '@/components/SignupModal';
 
 export default function Home() {
@@ -35,105 +37,14 @@ export default function Home() {
       </Section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white">
-        <div className="container-max">
-          <h2 className="text-display-md text-center mb-4 text-neutral-900">
-            Powerful Features
-          </h2>
-          <p className="text-center text-neutral-600 mb-16 max-w-2xl mx-auto text-lg">
-            Everything you need for intelligent calendar management
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: '📸',
-                title: 'Smart Image Recognition',
-                description: 'Upload event flyers and our AI instantly extracts all details—title, date, time, and location.',
-              },
-              {
-                icon: '🔗',
-                title: 'URL Expansion',
-                description: 'Paste a shortened link and we fetch event information from the target webpage automatically.',
-              },
-              {
-                icon: '✅',
-                title: 'Conflict Detection',
-                description: 'Before saving, we check your Google Calendar for overlapping events and notify you.',
-              },
-              {
-                icon: '🗺️',
-                title: 'Location Intelligence',
-                description: 'Verify venue addresses and automatically calculate travel time to other events.',
-              },
-              {
-                icon: '🌍',
-                title: 'Timezone Handling',
-                description: 'Events from different regions? We handle timezone conversion automatically.',
-              },
-              {
-                icon: '📱',
-                title: 'Mobile-First Design',
-                description: 'Fully native mobile app for iOS and Android with offline support.',
-              },
-            ].map((feature, idx) => (
-              <div
-                key={idx}
-                className="p-6 rounded-xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-heading-sm mb-2 text-neutral-900">{feature.title}</h3>
-                <p className="text-neutral-600 text-sm leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section id="features" background="neutral-50">
+        <Features />
+      </Section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-neutral-50">
-        <div className="container-max">
-          <h2 className="text-display-md text-center mb-4 text-neutral-900">
-            How It Works
-          </h2>
-          <p className="text-center text-neutral-600 mb-16 max-w-2xl mx-auto text-lg">
-            Simple, fast, and intelligent
-          </p>
-
-          <div className="grid md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              {
-                step: '1',
-                title: 'Share',
-                description: 'Capture an image, paste a link, or type event details',
-              },
-              {
-                step: '2',
-                title: 'Extract',
-                description: 'AI analyzes the content and pulls event information',
-              },
-              {
-                step: '3',
-                title: 'Review',
-                description: 'Verify details and check for calendar conflicts',
-              },
-              {
-                step: '4',
-                title: 'Save',
-                description: 'One tap to add the event to your Google Calendar',
-              },
-            ].map((item, idx) => (
-              <div key={idx} className="text-center">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-600 to-secondary-600 text-white flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
-                  {item.step}
-                </div>
-                <h3 className="text-heading-sm text-neutral-900 mb-2">{item.title}</h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section id="how-it-works" background="white">
+        <HowItWorks />
+      </Section>
 
       {/* FAQ Section */}
       <section id="faq" className="py-20 bg-white">

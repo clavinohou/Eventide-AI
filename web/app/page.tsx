@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import MarketingLayout from '@/components/MarketingLayout';
 import Hero from '@/components/Hero';
 import Section from '@/components/Section';
 import Problem from '@/components/Problem';
 import Solution from '@/components/Solution';
-import Features from '@/components/Features';
-import HowItWorks from '@/components/HowItWorks';
 import SignupModal from '@/components/SignupModal';
 
 export default function Home() {
@@ -36,53 +35,71 @@ export default function Home() {
         <Solution />
       </Section>
 
-      {/* Features Section */}
-      <Section id="features" background="neutral-50">
-        <Features />
-      </Section>
-
-      {/* How It Works Section */}
-      <Section id="how-it-works" background="white">
-        <HowItWorks />
-      </Section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-20 bg-white">
-        <div className="container-max">
-          <h2 className="text-display-md text-center mb-4 text-neutral-900">
-            Frequently Asked Questions
+      {/* Cross-links to dedicated pages */}
+      <Section id="explore" background="neutral-50">
+        <div className="text-center">
+          <h2 className="text-display-md text-neutral-900 mb-4">
+            Explore CAL-MGR
           </h2>
-          <p className="text-center text-neutral-600 mb-16 max-w-2xl mx-auto text-lg">
-            Everything you need to know about CAL-MGR
+          <p className="text-xl text-neutral-600 mb-12 max-w-3xl mx-auto">
+            Dive deeper into how CAL-MGR transforms your calendar management
           </p>
-
-          <div className="max-w-3xl mx-auto space-y-6">
-            {[
-              {
-                question: 'How accurate is the AI extraction?',
-                answer: 'Our AI achieves over 95% accuracy in extracting event details from flyers, websites, and text. We use advanced natural language processing and computer vision models trained on millions of events.',
-              },
-              {
-                question: 'Is my calendar data secure?',
-                answer: 'Absolutely. We use OAuth 2.0 for Google Calendar integration and never store your calendar data on our servers. All processing happens securely, and we follow industry-standard security practices.',
-              },
-              {
-                question: 'What if the AI makes a mistake?',
-                answer: 'You always review and can edit event details before saving to your calendar. Our conflict detection also alerts you to any scheduling issues.',
-              },
-              {
-                question: 'Which calendar services do you support?',
-                answer: 'Currently, we support Google Calendar. Support for Outlook, Apple Calendar, and other services is coming soon.',
-              },
-            ].map((faq, idx) => (
-              <div key={idx} className="p-6 bg-neutral-50 rounded-xl border border-neutral-200">
-                <h3 className="text-heading-sm text-neutral-900 mb-2">{faq.question}</h3>
-                <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link 
+              href="/features"
+              className="p-6 bg-white rounded-xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </div>
-            ))}
+              <h3 className="text-lg font-semibold text-neutral-900 mb-2">Features</h3>
+              <p className="text-neutral-600">Discover powerful capabilities that make calendar management effortless</p>
+            </Link>
+
+            <Link 
+              href="/how-it-works"
+              className="p-6 bg-white rounded-xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary-500 to-purple-500 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 mb-2">How It Works</h3>
+              <p className="text-neutral-600">See the AI-powered workflow that saves you hours each week</p>
+            </Link>
+
+            <Link 
+              href="/faq"
+              className="p-6 bg-white rounded-xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-accent-500 to-orange-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 mb-2">FAQ</h3>
+              <p className="text-neutral-600">Get answers to common questions about CAL-MGR</p>
+            </Link>
+
+            <Link 
+              href="/use-cases"
+              className="p-6 bg-white rounded-xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all group"
+            >
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-neutral-900 mb-2">Use Cases</h3>
+              <p className="text-neutral-600">Real-world scenarios where CAL-MGR makes a difference</p>
+            </Link>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-primary-50 to-white">

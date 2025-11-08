@@ -158,7 +158,7 @@ interface HowItWorksProps {
 }
 
 export default function HowItWorks({ className = '' }: HowItWorksProps) {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion() ?? false;
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },

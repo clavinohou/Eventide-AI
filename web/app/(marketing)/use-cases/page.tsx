@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import UseCasesPageClient from './UseCasesPageClient';
 
 export const metadata: Metadata = {
-  title: 'Use Cases - CAL-MGR | Real-World Applications',
-  description: 'Explore real-world scenarios where CAL-MGR saves time and reduces stress in event management for professionals, students, and families.',
+  title: 'Use Cases - Eventide AI | Real-World Applications',
+  description: 'Explore real-world scenarios where Eventide AI saves time and reduces stress in event management for professionals, students, and families.',
   openGraph: {
-    title: 'Use Cases - CAL-MGR',
-    description: 'Explore real-world scenarios where CAL-MGR saves time and reduces stress in event management for professionals, students, and families.',
+    title: 'Use Cases - Eventide AI',
+    description: 'Explore real-world scenarios where Eventide AI saves time and reduces stress in event management for professionals, students, and families.',
   },
 };
 
@@ -84,10 +84,10 @@ export default function UseCasesPage() {
         <div className="container-max">
           <div className="text-center mb-16">
             <h1 className="text-display-lg text-neutral-900 mb-4">
-              CAL-MGR in Action
+              Eventide AI in Action
             </h1>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-              Discover how people from all walks of life use CAL-MGR to save time and reduce stress
+              Discover how people from all walks of life use Eventide AI to save time and reduce stress
             </p>
           </div>
 

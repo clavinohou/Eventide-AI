@@ -1,5 +1,5 @@
 /**
- * Utility functions for the CAL-MGR landing app
+ * Utility functions for the Eventide AI landing app
  */
 
 /**

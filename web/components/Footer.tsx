@@ -15,9 +15,9 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">CM</span>
+                <span className="text-white font-bold text-sm">EA</span>
               </div>
-              <span className="font-bold text-neutral-900">CAL-MGR</span>
+              <span className="font-bold text-neutral-900">Eventide AI</span>
             </div>
             <p className="text-sm text-neutral-700 leading-relaxed">
               Transform any content into verified calendar events instantly with AI-powered extraction.
@@ -122,7 +122,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-neutral-300 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-neutral-700">
-            © {currentYear} CAL-MGR. All rights reserved.
+            © {currentYear} Eventide AI. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link

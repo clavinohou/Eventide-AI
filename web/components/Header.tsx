@@ -62,11 +62,11 @@ export default function Header({ onCtaClick }: HeaderProps) {
       <nav className="container-max py-4" aria-label="Main navigation">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group" aria-label="CAL-MGR Home">
+          <Link href="/" className="flex items-center gap-2 group" aria-label="Eventide AI Home">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center transition-transform group-hover:scale-105">
-              <span className="text-white font-bold">CM</span>
+              <span className="text-white font-bold">EA</span>
             </div>
-            <span className="text-xl font-bold text-neutral-900">CAL-MGR</span>
+            <span className="text-xl font-bold text-neutral-900">Eventide AI</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -1,6 +1,6 @@
 # Marketing Landing Page Components
 
-This document describes the reusable components built for the CAL-MGR marketing landing page.
+This document describes the reusable components built for the Eventide AI marketing landing page.
 
 ## Component Overview
 

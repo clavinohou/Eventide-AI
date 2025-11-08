@@ -2,10 +2,10 @@
  * Application-wide constants
  */
 
-export const SITE_NAME = 'CAL-MGR';
+export const SITE_NAME = 'Eventide AI';
 export const SITE_DESCRIPTION =
   'Transform any content into verified Google Calendar events. Share flyers, URLs, or text and let AI handle the rest.';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cal-mgr.app';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://eventide-ai.app';
 
 export const BRAND_COLORS = {
   primary: '#0694ff',

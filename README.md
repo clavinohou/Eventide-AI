@@ -17,8 +17,9 @@ This repository contains a complete MVP implementation of an agentic calendar ap
 ```
 cal-mgr/
 ├── backend/          # Express.js/TypeScript API server
-├── mobile/            # Expo React Native app
-└── docs/              # Documentation
+├── mobile/           # Expo React Native app
+├── web/              # Next.js marketing/landing app
+└── docs/             # Documentation
 ```
 
 ### 📚 Key Documents
@@ -115,6 +116,15 @@ ADK Tools (Calendar, Places, TimeZone, Directions, UrlExpand, Media)
    npm install
    npm start
    ```
+
+4. **Set Up Landing App (Next.js)**
+   ```bash
+   cd web
+   npm install
+   npm run dev
+   ```
+   Visit [http://localhost:3000](http://localhost:3000) to view the landing page.
+   See [web/README.md](./web/README.md) for full instructions.
 
 **Full instructions**: See [QUICK_START.md](./QUICK_START.md)
 

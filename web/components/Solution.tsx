@@ -78,7 +78,7 @@ export default function Solution({ className = '' }: SolutionProps) {
         </motion.h2>
         <motion.p
           variants={itemVariants}
-          className="text-xl text-neutral-600 leading-relaxed max-w-3xl mx-auto"
+          className="text-xl text-neutral-700 leading-relaxed max-w-3xl mx-auto"
         >
           AIATL uses advanced AI to instantly extract event details from any source—photos, links, or text. 
           No typing. No errors. Just verified events in your calendar.
@@ -98,12 +98,12 @@ export default function Solution({ className = '' }: SolutionProps) {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="text-center p-6 bg-white rounded-2xl border border-neutral-200 shadow-sm"
+              className="text-center p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-neutral-300 shadow-md"
             >
               <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-2">
                 {metric.value}
               </div>
-              <div className="text-sm font-medium text-neutral-600">
+              <div className="text-sm font-medium text-neutral-700">
                 {metric.label}
               </div>
             </motion.div>
@@ -125,7 +125,7 @@ export default function Solution({ className = '' }: SolutionProps) {
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="group flex gap-4 p-6 bg-white rounded-2xl border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all duration-300"
+              className="group flex gap-4 p-6 bg-white/90 backdrop-blur-sm rounded-2xl border border-neutral-300 hover:border-primary-400 hover:shadow-xl transition-all duration-300"
             >
               {/* Icon */}
               <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-2xl shadow-lg flex-shrink-0`}>
@@ -137,7 +137,7 @@ export default function Solution({ className = '' }: SolutionProps) {
                 <h3 className="text-heading-sm text-neutral-900 mb-2 font-semibold">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-neutral-600 leading-relaxed">
+                <p className="text-sm text-neutral-700 leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -180,7 +180,7 @@ export default function Solution({ className = '' }: SolutionProps) {
                   initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: 0.5 }}
-                  className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-4 border border-primary-200"
+                  className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-xl p-4 border border-primary-300"
                 >
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold flex-shrink-0">
@@ -190,8 +190,8 @@ export default function Solution({ className = '' }: SolutionProps) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-neutral-900 text-sm">Tech Conference 2024</p>
-                      <p className="text-xs text-neutral-600 mt-1">Nov 15 · 2:00 PM</p>
-                      <p className="text-xs text-neutral-500 mt-1">Convention Center</p>
+                      <p className="text-xs text-neutral-700 mt-1">Nov 15 · 2:00 PM</p>
+                      <p className="text-xs text-neutral-600 mt-1">Convention Center</p>
                     </div>
                   </div>
                 </motion.div>
@@ -201,7 +201,7 @@ export default function Solution({ className = '' }: SolutionProps) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: shouldReduceMotion ? 0 : 0.8, duration: 0.5 }}
-                  className="flex items-center gap-3 p-3 bg-neutral-50 rounded-lg"
+                  className="flex items-center gap-3 p-3 bg-neutral-100 rounded-lg border border-neutral-200"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center flex-shrink-0">
                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,7 +212,7 @@ export default function Solution({ className = '' }: SolutionProps) {
                     <p className="text-xs font-semibold text-neutral-900">AI Processing Complete</p>
                     <div className="flex items-center gap-1 mt-1">
                       <span className="inline-block w-2 h-2 rounded-full bg-success-500" />
-                      <span className="text-xs text-neutral-600">No conflicts detected</span>
+                      <span className="text-xs text-neutral-700">No conflicts detected</span>
                     </div>
                   </div>
                 </motion.div>

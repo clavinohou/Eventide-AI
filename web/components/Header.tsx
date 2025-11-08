@@ -53,8 +53,8 @@ export default function Header({ onCtaClick }: HeaderProps) {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/80 backdrop-blur-md border-b border-neutral-200 shadow-sm'
-          : 'bg-white border-b border-neutral-200'
+          ? 'bg-white/90 backdrop-blur-md border-b border-neutral-300 shadow-md'
+          : 'bg-white/95 backdrop-blur-sm border-b border-neutral-300'
       }`}
     >
       <nav className="container-max py-4" aria-label="Main navigation">
@@ -74,7 +74,7 @@ export default function Header({ onCtaClick }: HeaderProps) {
                 key={link.href}
                 href={link.href}
                 onClick={handleNavClick}
-                className="text-neutral-600 hover:text-primary-600 font-medium transition-colors relative group"
+                className="text-neutral-700 hover:text-primary-600 font-medium transition-colors relative group"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-600 transition-all group-hover:w-full" />

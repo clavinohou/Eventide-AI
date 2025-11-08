@@ -46,16 +46,16 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-primary-50 via-white to-white">
-      {/* Gradient Mesh Background */}
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      {/* Gradient Mesh Background - Adjusted for sky backdrop */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 -left-4 w-96 h-96 bg-primary-200/40 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-0 -right-4 w-96 h-96 bg-secondary-200/40 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-accent-200/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        <div className="absolute top-0 -left-4 w-96 h-96 bg-primary-300/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+        <div className="absolute top-0 -right-4 w-96 h-96 bg-secondary-300/25 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+        <div className="absolute -bottom-8 left-20 w-96 h-96 bg-accent-300/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
       </div>
 
       {/* Subtle Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <div className="container-max relative z-10 py-20">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -68,7 +68,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
           >
             {/* Social Proof Badge */}
             <motion.div variants={itemVariants} className="inline-flex mb-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-primary-200 rounded-full shadow-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/90 backdrop-blur-sm border border-primary-300 rounded-full shadow-md">
                 <div className="flex -space-x-2">
                   {[1, 2, 3].map((i) => (
                     <div
@@ -77,7 +77,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
                     />
                   ))}
                 </div>
-                <span className="text-sm font-medium text-neutral-700">
+                <span className="text-sm font-medium text-neutral-800">
                   Join <span className="text-primary-600 font-semibold">500+</span> beta users
                 </span>
               </div>
@@ -97,7 +97,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
             {/* Subhead */}
             <motion.p
               variants={itemVariants}
-              className="text-xl md:text-2xl text-neutral-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+              className="text-xl md:text-2xl text-neutral-700 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0"
             >
               Snap a flyer, paste a link, or share event details. Our AI extracts everything, checks for conflicts, and adds it to Google Calendar—instantly.
             </motion.p>
@@ -114,7 +114,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-white/60 backdrop-blur-sm border border-neutral-200 rounded-full text-sm font-medium text-neutral-700"
+                  className="flex items-center gap-2 px-3 py-1.5 bg-white/80 backdrop-blur-sm border border-neutral-300 rounded-full text-sm font-medium text-neutral-800 shadow-sm"
                 >
                   <span className="text-base">{feature.icon}</span>
                   <span>{feature.text}</span>
@@ -192,7 +192,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
                 initial={{ opacity: 0, y: 40, rotate: -3 }}
                 animate={{ opacity: 1, y: 0, rotate: -3 }}
                 transition={{ delay: 1, duration: 0.8 }}
-                className="absolute -top-6 -left-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-200 max-w-[280px]"
+                className="absolute -top-6 -left-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-300 max-w-[280px]"
               >
                 <div className="flex items-start gap-3">
                   <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold shrink-0">
@@ -202,17 +202,17 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-neutral-900 text-sm truncate">Tech Conference 2024</p>
-                    <p className="text-xs text-neutral-500 mt-1">Nov 15 · 2:00 PM</p>
+                    <p className="text-xs text-neutral-600 mt-1">Nov 15 · 2:00 PM</p>
                     <div className="mt-2 flex items-center gap-1">
                       <span className="inline-block w-2 h-2 rounded-full bg-success-500" />
-                      <span className="text-xs text-neutral-600">No conflicts</span>
+                      <span className="text-xs text-neutral-700">No conflicts</span>
                     </div>
                   </div>
                 </div>
               </motion.div>
 
               {/* Main Visual */}
-              <div className="relative bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-3xl border-2 border-neutral-200 shadow-2xl overflow-hidden aspect-[4/5]">
+              <div className="relative bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-3xl border-2 border-neutral-300 shadow-2xl overflow-hidden aspect-[4/5]">
                 {/* Phone Frame */}
                 <div className="absolute inset-4 bg-white rounded-2xl shadow-inner">
                   {/* Status Bar */}
@@ -250,7 +250,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
                 initial={{ opacity: 0, y: 40, rotate: 3 }}
                 animate={{ opacity: 1, y: 0, rotate: 3 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
-                className="absolute -bottom-6 -right-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-200 max-w-[240px]"
+                className="absolute -bottom-6 -right-6 z-10 bg-white rounded-2xl shadow-2xl p-4 border border-neutral-300 max-w-[240px]"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center shrink-0">
@@ -260,7 +260,7 @@ export default function Hero({ onSignupClick, onDemoClick }: HeroProps) {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs font-semibold text-neutral-900">AI Extracting...</p>
-                    <div className="mt-2 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                    <div className="mt-2 h-1.5 bg-neutral-200 rounded-full overflow-hidden">
                       <motion.div
                         className="h-full bg-gradient-to-r from-accent-500 to-accent-600"
                         initial={{ width: '0%' }}

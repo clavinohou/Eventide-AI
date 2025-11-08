@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-neutral-200 bg-white py-12">
+    <footer className="border-t border-neutral-300 bg-white/95 backdrop-blur-sm py-12">
       <div className="container-max">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
@@ -15,7 +15,7 @@ export default function Footer() {
               </div>
               <span className="font-bold text-neutral-900">CAL-MGR</span>
             </div>
-            <p className="text-sm text-neutral-600 leading-relaxed">
+            <p className="text-sm text-neutral-700 leading-relaxed">
               Transform any content into verified calendar events instantly with AI-powered extraction.
             </p>
           </div>
@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Product */}
           <div>
             <h4 className="font-semibold text-neutral-900 mb-4">Product</h4>
-            <ul className="space-y-2 text-sm text-neutral-600">
+            <ul className="space-y-2 text-sm text-neutral-700">
               <li>
                 <Link href="#features" className="hover:text-primary-600 transition-colors">
                   Features
@@ -50,7 +50,7 @@ export default function Footer() {
           {/* Company */}
           <div>
             <h4 className="font-semibold text-neutral-900 mb-4">Company</h4>
-            <ul className="space-y-2 text-sm text-neutral-600">
+            <ul className="space-y-2 text-sm text-neutral-700">
               <li>
                 <Link href="#" className="hover:text-primary-600 transition-colors">
                   About
@@ -77,7 +77,7 @@ export default function Footer() {
           {/* Legal */}
           <div>
             <h4 className="font-semibold text-neutral-900 mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-neutral-600">
+            <ul className="space-y-2 text-sm text-neutral-700">
               <li>
                 <Link href="#" className="hover:text-primary-600 transition-colors">
                   Privacy Policy
@@ -98,8 +98,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-neutral-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-neutral-600">
+        <div className="border-t border-neutral-300 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-neutral-700">
             © {currentYear} CAL-MGR. All rights reserved.
           </p>
           <div className="flex gap-6">
@@ -107,7 +107,7 @@ export default function Footer() {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-primary-600 transition-colors"
+              className="text-neutral-700 hover:text-primary-600 transition-colors"
               aria-label="Follow us on Twitter"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -118,7 +118,7 @@ export default function Footer() {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-primary-600 transition-colors"
+              className="text-neutral-700 hover:text-primary-600 transition-colors"
               aria-label="View our GitHub repository"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -129,7 +129,7 @@ export default function Footer() {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-600 hover:text-primary-600 transition-colors"
+              className="text-neutral-700 hover:text-primary-600 transition-colors"
               aria-label="Connect with us on LinkedIn"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

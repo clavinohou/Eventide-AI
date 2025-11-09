@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Swipeable } from 'react-native-gesture-handler';
 import { ApiService } from '../services/api';
 import { theme } from '../theme';
+import { openInGoogleMaps, canOpenInMaps } from '../utils/maps';
 
 const apiService = new ApiService();
 
@@ -191,7 +192,10 @@ export default function HistoryScreen({ navigation }: any) {
                   activeOpacity={0.8}
                 >
                 <View style={styles.eventHeader}>
-                  <Text style={styles.eventTitle}>{event.title}</Text>
+                  <Text style={[
+                    styles.eventTitle,
+                    isPastEvent(event.startTime) && styles.eventTitlePast
+                  ]}>{event.title}</Text>
                   <View style={styles.sourceBadge}>
                     <Text style={styles.sourceText}>
                       {event.source === 'flyer' ? '📷' : event.source === 'url' ? '🔗' : '📝'}
@@ -212,7 +216,21 @@ export default function HistoryScreen({ navigation }: any) {
                     : formatDate(event.startTime)}
                 </Text>
                 {event.location && (
-                  <Text style={styles.eventLocation}>📍 {event.location}</Text>
+                  <View style={styles.eventLocationContainer}>
+                    <Text style={styles.eventLocation}>📍 </Text>
+                    <TouchableOpacity
+                      onPress={() => canOpenInMaps(event.location) && openInGoogleMaps(event.location!)}
+                      disabled={!canOpenInMaps(event.location)}
+                      activeOpacity={canOpenInMaps(event.location) ? 0.7 : 1}
+                    >
+                      <Text style={[
+                        styles.eventLocation,
+                        canOpenInMaps(event.location) && styles.eventLocationClickable
+                      ]}>
+                        {event.location}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 )}
                 {event.description && (
                   <Text style={styles.eventDescription} numberOfLines={2}>
@@ -316,6 +334,10 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     flex: 1,
   },
+  eventTitlePast: {
+    textDecorationLine: 'line-through',
+    color: theme.colors.textSecondary,
+  },
   sourceBadge: {
     marginLeft: theme.spacing.sm,
   },
@@ -327,10 +349,18 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.xs,
   },
+  eventLocationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing.xs,
+  },
   eventLocation: {
     fontSize: theme.typography.sizes.sm,
     color: theme.colors.textSecondary,
-    marginBottom: theme.spacing.xs,
+  },
+  eventLocationClickable: {
+    color: theme.colors.primary,
+    textDecorationLine: 'underline',
   },
   eventDescription: {
     fontSize: theme.typography.sizes.sm,

@@ -18,6 +18,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { ApiService } from '../services/api';
 import { CanonicalEvent } from '../types/event';
 import { theme } from '../theme';
+import { openInGoogleMaps, canOpenInMaps } from '../utils/maps';
 
 const apiService = new ApiService();
 
@@ -415,7 +416,18 @@ export default function ReviewScreen({ route, navigation }: any) {
           blurOnSubmit={true}
         />
         {event.location?.address && event.location.address !== event.location?.name && (
-          <Text style={styles.addressText}>{event.location.address}</Text>
+          <TouchableOpacity
+            onPress={() => canOpenInMaps(event.location) && openInGoogleMaps(event.location!)}
+            disabled={!canOpenInMaps(event.location)}
+            activeOpacity={canOpenInMaps(event.location) ? 0.7 : 1}
+          >
+            <Text style={[
+              styles.addressText,
+              canOpenInMaps(event.location) && styles.addressTextClickable
+            ]}>
+              {event.location.address}
+            </Text>
+          </TouchableOpacity>
         )}
         {!event.location && (
           <Text style={styles.hintText}>No location found - you can add one or leave empty</Text>
@@ -569,6 +581,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginTop: 4
+  },
+  addressTextClickable: {
+    color: theme.colors.primary,
+    textDecorationLine: 'underline',
   },
   conflictContainer: {
     backgroundColor: '#fff3cd',

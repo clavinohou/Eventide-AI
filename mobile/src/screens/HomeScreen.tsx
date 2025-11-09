@@ -49,23 +49,87 @@ export default function HomeScreen({ navigation }: any) {
     });
   };
 
-  const pickImage = async () => {
+  const showMediaOptions = () => {
+    Alert.alert(
+      'Select Media',
+      'Choose how you want to add media',
+      [
+        {
+          text: 'Take Photo/Video',
+          onPress: () => pickFromCamera(),
+        },
+        {
+          text: 'Choose from Library',
+          onPress: () => pickFromLibrary(),
+        },
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const pickFromCamera = async () => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
     if (!permission.granted) {
-      Alert.alert('Permission Required', 'Camera permission is needed to capture flyers');
+      Alert.alert('Permission Required', 'Camera permission is needed to capture media');
       return;
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       quality: 0.8,
       base64: true
     });
 
-    if (!result.canceled && result.assets[0]) {
-      const base64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
-      await handleExtract('image', base64);
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const asset = result.assets[0];
+      if (asset.type === 'video') {
+        // For videos, we'll need to handle differently - for now, extract as URL if possible
+        // Or we could convert to base64, but that might be too large
+        Alert.alert('Video Support', 'Video capture is supported. Processing...');
+        // You might want to save the video and pass the file URI instead
+        const base64 = asset.base64 ? `data:video/mp4;base64,${asset.base64}` : null;
+        if (base64) {
+          await handleExtract('image', base64); // Backend handles video URLs
+        }
+      } else {
+        const base64 = `data:image/jpeg;base64,${asset.base64}`;
+        await handleExtract('image', base64);
+      }
+    }
+  };
+
+  const pickFromLibrary = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission Required', 'Media library permission is needed to select media');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 0.8,
+      base64: true
+    });
+
+    if (!result.canceled && result.assets && result.assets[0]) {
+      const asset = result.assets[0];
+      if (asset.type === 'video') {
+        // For videos from library, handle similarly
+        Alert.alert('Video Support', 'Video from library is supported. Processing...');
+        const base64 = asset.base64 ? `data:video/mp4;base64,${asset.base64}` : null;
+        if (base64) {
+          await handleExtract('image', base64);
+        }
+      } else {
+        const base64 = `data:image/jpeg;base64,${asset.base64}`;
+        await handleExtract('image', base64);
+      }
     }
   };
 
@@ -134,7 +198,7 @@ export default function HomeScreen({ navigation }: any) {
 
         <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={pickImage}
+          onPress={showMediaOptions}
           activeOpacity={0.8}
           style={styles.mainButton}
         >

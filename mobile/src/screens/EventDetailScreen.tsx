@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-  Platform
+  Platform,
+  Animated
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,6 +16,7 @@ import { ApiService } from '../services/api';
 import { theme } from '../theme';
 import { CanonicalEvent } from '../types/event';
 import { ClickableText } from '../components/ClickableText';
+import { openInGoogleMaps, canOpenInMaps } from '../utils/maps';
 
 const apiService = new ApiService();
 
@@ -30,8 +32,13 @@ export default function EventDetailScreen({ route, navigation }: any) {
   const [event, setEvent] = useState<CanonicalEvent | null>(initialEvent || null);
   const [suggestedTasks, setSuggestedTasks] = useState<SuggestedTask[]>([]);
   const [loading, setLoading] = useState(!initialEvent);
+  const [loadingTasks, setLoadingTasks] = useState(false);
   const [savingTask, setSavingTask] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
+  
+  // Animation values for fade in/out
+  const loadingOpacity = useRef(new Animated.Value(1)).current;
+  const tasksOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (!initialEvent) {
@@ -76,10 +83,34 @@ export default function EventDetailScreen({ route, navigation }: any) {
     if (!event) return;
     
     try {
+      setLoadingTasks(true);
+      // Reset animation values
+      loadingOpacity.setValue(1);
+      tasksOpacity.setValue(0);
+      
       const tasks = await apiService.getSuggestedTasks(event);
       setSuggestedTasks(tasks);
+      
+      // Fade out loading, fade in tasks
+      Animated.parallel([
+        Animated.timing(loadingOpacity, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }),
+        Animated.timing(tasksOpacity, {
+          toValue: 1,
+          duration: 300,
+          delay: 100,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        setLoadingTasks(false);
+      });
     } catch (error: any) {
       console.error('Error loading suggested tasks:', error);
+      setLoadingTasks(false);
+      loadingOpacity.setValue(0);
     }
   };
 
@@ -181,9 +212,21 @@ export default function EventDetailScreen({ route, navigation }: any) {
             </Text>
           )}
           {event.location && (
-            <Text style={styles.eventLocation}>
-              📍 {event.location.name || event.location.address}
-            </Text>
+            <View style={styles.eventLocationContainer}>
+              <Text style={styles.eventLocation}>📍 </Text>
+              <TouchableOpacity
+                onPress={() => canOpenInMaps(event.location) && openInGoogleMaps(event.location!)}
+                disabled={!canOpenInMaps(event.location)}
+                activeOpacity={canOpenInMaps(event.location) ? 0.7 : 1}
+              >
+                <Text style={[
+                  styles.eventLocation,
+                  canOpenInMaps(event.location) && styles.eventLocationClickable
+                ]}>
+                  {event.location.name || event.location.address}
+                </Text>
+              </TouchableOpacity>
+            </View>
           )}
           {event.description && (
             <ClickableText text={event.description} style={styles.eventDescription} />
@@ -192,47 +235,67 @@ export default function EventDetailScreen({ route, navigation }: any) {
       </View>
 
       {/* Suggested Tasks */}
-      {suggestedTasks.length > 0 && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Suggested Tasks</Text>
-          <Text style={styles.sectionSubtitle}>
-            Add reminders to help you prepare for this event
-          </Text>
-          {suggestedTasks.map((task, index) => (
-            <View key={index} style={styles.taskCard}>
-              <View style={styles.taskContent}>
-                <Text style={styles.taskTitle}>{task.title}</Text>
-                {task.description && (
-                  <Text style={styles.taskDescription}>{task.description}</Text>
-                )}
-                {task.dueDate && (
-                  <Text style={styles.taskDue}>
-                    Due: {new Date(task.dueDate).toLocaleDateString()}
-                  </Text>
-                )}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Suggested Tasks</Text>
+        <Text style={styles.sectionSubtitle}>
+          Add reminders to help you prepare for this event
+        </Text>
+        
+        <View style={[styles.tasksContainer, loadingTasks && styles.tasksContainerLoading]}>
+          {/* Loading State - Absolutely positioned overlay */}
+          {loadingTasks && (
+            <Animated.View 
+              style={[
+                styles.loadingTasksContainer, 
+                { 
+                  opacity: loadingOpacity,
+                }
+              ]}
+              pointerEvents="none"
+            >
+              <ActivityIndicator size="large" color={theme.colors.primary} />
+              <Text style={styles.loadingTasksText}>Generating suggested tasks...</Text>
+            </Animated.View>
+          )}
+          
+          {/* Tasks List - Always rendered but with opacity animation */}
+          <Animated.View style={{ opacity: tasksOpacity }}>
+            {suggestedTasks.map((task, index) => (
+              <View key={index} style={styles.taskCard}>
+                <View style={styles.taskContent}>
+                  <Text style={styles.taskTitle}>{task.title}</Text>
+                  {task.description && (
+                    <Text style={styles.taskDescription}>{task.description}</Text>
+                  )}
+                  {task.dueDate && (
+                    <Text style={styles.taskDue}>
+                      Due: {new Date(task.dueDate).toLocaleDateString()}
+                    </Text>
+                  )}
+                </View>
+                <TouchableOpacity
+                  onPress={() => handleAddTask(task)}
+                  disabled={savingTask === task.title}
+                  activeOpacity={0.8}
+                >
+                  {savingTask === task.title ? (
+                    <ActivityIndicator size="small" color={theme.colors.primary} />
+                  ) : (
+                    <LinearGradient
+                      colors={theme.colors.gradient.warm}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.addTaskButton}
+                    >
+                      <Text style={styles.addTaskText}>Add</Text>
+                    </LinearGradient>
+                  )}
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => handleAddTask(task)}
-                disabled={savingTask === task.title}
-                activeOpacity={0.8}
-              >
-                {savingTask === task.title ? (
-                  <ActivityIndicator size="small" color={theme.colors.primary} />
-                ) : (
-                  <LinearGradient
-                    colors={theme.colors.gradient.warm}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.addTaskButton}
-                  >
-                    <Text style={styles.addTaskText}>Add</Text>
-                  </LinearGradient>
-                )}
-              </TouchableOpacity>
-            </View>
-          ))}
+            ))}
+          </Animated.View>
         </View>
-      )}
+      </View>
 
       {/* Actions */}
       <View style={styles.actions}>
@@ -321,10 +384,18 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.sm,
   },
+  eventLocationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing.sm,
+  },
   eventLocation: {
     fontSize: theme.typography.sizes.base,
     color: theme.colors.textSecondary,
-    marginBottom: theme.spacing.sm,
+  },
+  eventLocationClickable: {
+    color: theme.colors.primary,
+    textDecorationLine: 'underline',
   },
   eventDescription: {
     fontSize: theme.typography.sizes.base,
@@ -400,6 +471,32 @@ const styles = StyleSheet.create({
     color: theme.colors.textOnGradient,
     fontSize: theme.typography.sizes.base,
     fontWeight: theme.typography.weights.semibold,
+  },
+  tasksContainer: {
+    position: 'relative',
+  },
+  tasksContainerLoading: {
+    minHeight: 150,
+  },
+  loadingTasksContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing['2xl'],
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 150,
+    ...theme.shadows.sm,
+    zIndex: 1,
+  },
+  loadingTasksText: {
+    marginTop: theme.spacing.md,
+    fontSize: theme.typography.sizes.base,
+    color: theme.colors.textSecondary,
+    textAlign: 'center',
   },
   backButton: {
     padding: theme.spacing.base,

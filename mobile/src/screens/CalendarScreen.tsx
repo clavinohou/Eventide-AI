@@ -20,6 +20,7 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { ApiService } from '../services/api';
 import { theme } from '../theme';
 import { LinearGradient } from 'expo-linear-gradient';
+import { openInGoogleMaps, canOpenInMaps } from '../utils/maps';
 
 const apiService = new ApiService();
 
@@ -552,7 +553,21 @@ export default function CalendarScreen({ navigation }: any) {
                   </View>
                   <Text style={styles.eventTime}>{formatDate(event.startTime, event.isAllDay)}</Text>
                   {event.location && (
-                    <Text style={styles.eventLocation}>📍 {event.location}</Text>
+                    <View style={styles.eventLocationContainer}>
+                      <Text style={styles.eventLocation}>📍 </Text>
+                      <TouchableOpacity
+                        onPress={() => canOpenInMaps(event.location) && openInGoogleMaps(event.location!)}
+                        disabled={!canOpenInMaps(event.location)}
+                        activeOpacity={canOpenInMaps(event.location) ? 0.7 : 1}
+                      >
+                        <Text style={[
+                          styles.eventLocation,
+                          canOpenInMaps(event.location) && styles.eventLocationClickable
+                        ]}>
+                          {event.location}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   )}
                 </TouchableOpacity>
               </Swipeable>
@@ -962,9 +977,17 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     marginBottom: theme.spacing.xs,
   },
+  eventLocationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   eventLocation: {
     fontSize: theme.typography.sizes.sm,
     color: theme.colors.textSecondary,
+  },
+  eventLocationClickable: {
+    color: theme.colors.primary,
+    textDecorationLine: 'underline',
   },
   deleteAction: {
     backgroundColor: theme.colors.error,

@@ -1,7 +1,6 @@
 # Eventide AI: Agentic Calendar App
 
 **Project**: Eventide AI  
-**Track**: Google Hackathon - Media Mastery + Agentic Intelligence  
 **Status**: ✅ Full Implementation Complete
 
 Eventide AI transforms any user-shared content (images, videos, URLs, text) into verified Google Calendar events with intelligent extraction, conflict detection, and task management.
